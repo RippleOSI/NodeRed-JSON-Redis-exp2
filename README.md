@@ -17,7 +17,7 @@ This project is well-designed, easy to maintain and extend and well-documented a
 
 ## Overview of Approach
 
-![NodeRed flow](/img/NodeRed_JSONata_Redis_exp1.PNG)
+![NodeRed flow](/img/NodeRed_JSON_Redis_exp2.PNG)
 
 
 ## Nodes Description in the flow

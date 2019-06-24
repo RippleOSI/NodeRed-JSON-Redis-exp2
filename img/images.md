@@ -1,3 +1,3 @@
 List of Images
 
-NodeRed_JSONata_Redis_exp1.PNG
+NodeRed_JSON_Redis_exp2.PNG
