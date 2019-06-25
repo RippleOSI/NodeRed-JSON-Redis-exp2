@@ -21,36 +21,42 @@ This project is well-designed, easy to maintain and extend and well-documented a
 
 ## Project Flow Guide
 ```
-  The first 3 lines are for Create Action.
-    First, it accepts "/patient/[patientID]/allergies(or medications or problems)" type URL with Http POST Request Node.
-    Then, retrieve post params and generate data for Redis Command.
-    After saving data to redis, the respond with sucess result.
-  The next 3 lines are for Read Action.
-    First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http GET Request Node.
-    And the these nodes are described in details in the previous version.
-  The next 3 lines are for Update Action.
-    First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http PUT Request Node.
-    It looks for redis database if the data is exist so that it could be updated.
-    "Redis HEXISTS Params, Redis hexist, Check the Result" nodes are used for this operation.
-    Once it's determined that the data exists in the database, update data with Redis HSET command.
-    "Join Success Result, Redis HSET Params, Redis HSET" nodes are used for this operation.
-  The next 3 lines are for Delete Action.
-    First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http DELETE Request node.
-    Delete data from redis database using Redis HDEL command and check for result if the data is deleted successfully.
-  The next 3 lines are for Synopsis Headings API.
-    First, it accepts "/patient/[patientID]/synopsis/allergies(or medications or problems) type URL with Http GET Request node.
-    It looks for redis database and retrieve all the data related to that patient and data type.
-    "Redis HKEYS Params, Redis hkeys, Check the result" nodes are used for this operation.
-    Then, it retrieves up to 4 datasets for related patient and datatype.
-    "Join Keys data, Redis HMGET params, Redis hmget, Synopsis JSON string, Synopsis JSON object, Make synopsis Object" nodes are used for this operation.
-    After that, it formats synopsis data to {"heading": "allegies", "synopsis":[], "token":''} type and respond.
-  Other lines are for Testing the APIs.
-    "Create Test" Line is for testing Create operation with random data.
-    "Update Test" Line is for testing Update operation with some data which is described in "Generate Data for Update" node.
-    "Delete Test" Line is for testing Delete operation with data which is described in "Generate Data for Delete" node.
-    "Synopsis Test" Lines are for testing Synopsis Heading.
-    "Data Test" Lines are for testing Read operations for specific data source.
-    All the Test Nodes are injectable, which means it runs when you click on the left button on the node and you can see the result in the debug panel.
+  JSON-REDIS-SECOND-TAB holds main flow for API.
+    The first 4 lines are for Create Action.
+      First, it accepts "/patient/[patientID]/allergies(or medications or problems)" type URL with Http POST Request Node.
+      Then, retrieve post params and generate data for Redis Command.
+      After saving data to redis, the respond with sucess result.
+    The next 4 lines are for Read Action.
+      First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http GET Request Node.
+      And the these nodes are described in details in the previous version.
+    The next 4 lines are for Update Action.
+      First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http PUT Request Node.
+      It looks for redis database if the data is exist so that it could be updated.
+      "Redis HEXISTS Params, Redis hexist, Check the Result" nodes are used for this operation.
+      Once it's determined that the data exists in the database, update data with Redis HSET command.
+      "Join Success Result, Redis HSET Params, Redis HSET" nodes are used for this operation.
+    The next 4 lines are for Delete Action.
+      First, it accepts "/patient/[patientID]/allergies/[sourceID]" type URL with Http DELETE Request node.
+      Delete data from redis database using Redis HDEL command and check for result if the data is deleted successfully.
+    The next 3 lines are for Synopsis Headings API.
+      First, it accepts "/patient/[patientID]/synopsis/allergies(or medications or problems) type URL with Http GET Request node.
+      It looks for redis database and retrieve all the data related to that patient and data type.
+      "Redis HKEYS Params, Redis hkeys, Check the result" nodes are used for this operation.
+      Then, it retrieves up to 4 datasets for related patient and datatype.
+      "Join Keys data, Redis HMGET params, Redis hmget, Synopsis JSON string, Synopsis JSON object, Make synopsis Object" nodes are used for this operation.
+      After that, it formats synopsis data to {"heading": "allegies", "synopsis":[], "token":''} type and respond.
+    The next 4 lines are for Patient CRUD API.
+      It accepts Http requests and manipulate data in the similar way as other CRUD Actions.
+      However, in this case, you have to notice that the name table should be created automatically for user search.
+  
+  JSON-REDIS-TEST holds test flow for API.
+      "Create Test" Line is for testing Create operation with random data.
+      "Update Test" Line is for testing Update operation with some data which is described in "Generate Data for Update" node.
+      "Delete Test" Line is for testing Delete operation with data which is described in "Generate Data for Delete" node.
+      "Synopsis Test" Lines are for testing Synopsis Heading.
+      "Data Test" Lines are for testing Read operations for specific data source.
+      All the Test Nodes are injectable, which means it runs when you click on the left button on the node and you can see the result in the debug panel.
+      "Patient Create, Update, Delete" Tests are for testing CRUD for Patients.
 ```
 
 ## Nodes Description in the flow
