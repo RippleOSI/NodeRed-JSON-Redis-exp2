@@ -2796,7 +2796,7 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://c:1880/patient/9999999001/synopsis/allergies",
+        "url": "http://127.0.0.1:1880/patient/9999999001/synopsis/allergies",
         "tls": "",
         "proxy": "",
         "authType": "",
