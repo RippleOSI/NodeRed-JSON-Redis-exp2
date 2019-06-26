@@ -13,7 +13,7 @@ This project is well-designed, easy to maintain and extend and well-documented a
 - exit
 - docker stop my-nodered
 - docker start my-nodered
-- docker run -v 'DIRECTORY_PATH'/redis.conf:/usr/local/etc/redis/redis.conf --name my-redis redis redis-server /usr/local/etc/redis/redis.conf
+- docker run -it -p 6379:6379 -d -v 'DIRECTORY_PATH'/redis.conf:/usr/local/etc/redis/redis.conf --name my-redis redis redis-server /usr/local/etc/redis/redis.conf
 - Import flows from JSON file and deploy it.
 - Enjoy your API
 
