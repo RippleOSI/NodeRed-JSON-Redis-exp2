@@ -2886,7 +2886,7 @@
         "type": "function",
         "z": "41fae537.ef571c",
         "name": "Generate Data for Create",
-        "func": "datatypes = [\n    \"allergies\", \n    \"medications\", \n    \"problems\",\n    \"vitalsigns\"\n];\n\ntype = Math.floor(Math.random() * 4);\ntimestamp = msg.payload;\n\nmsg.payload = {\n    ptId: 9999999001,\n    datatype: datatypes[type]\n}\n\nswitch(type) {\n    case 0:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            cause: \"cats\",\n            causeCode: \"cats\",\n            causeTerminology: \"cats\",\n            dateCreated: timestamp,\n            reaction: \"cats\",\n            originalComposition: \"\",\n            originalSource: \"\",\n            terminologyCode: \"\",\n        };\n        break;\n    case 1:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreated: timestamp,\n            doseAmount: \"20 mg\",\n            doseDirections: \"20 mg\",\n            doseTiming: \"1 per day\",\n            medicationCode: \"test\",\n            name: \"Paracetomol\",\n            route: \"Po Per Oral\",\n            startDate: \"2019-06-12\",\n            startTime: \"2019-06-15\",\n        }\n        break;\n    case 2:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            code: \"test\",\n            dateCreated: timestamp,\n            dateOfOnset: \"2019-06-11\",\n            description: \"test\",\n            problem: \"Asthma\",\n            terminology: \"test\",\n            originalComposition: \"\",\n            originalSource: \"\",\n        }\n        break;\n    case 3:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreate: 1560429237,\n            diastolicBP: \"98\",\n            heartRate: \"98\",\n            levelOfConsciousness: \"Voice\",\n            newsScore: \"11\",\n            oxygenSaturation: \"95\",\n            oxygenSupplemental: true,\n            respirationRate: \"13\",\n            systolicBP: \"98\",\n            temperature: \"37\",\n        }\n}\n\nreturn msg;",
+        "func": "datatypes = [\n    \"allergies\", \n    \"medications\", \n    \"problems\",\n    \"vitalsigns\"\n];\n\ntype = Math.floor(Math.random() * 4);\n//type=3;\ntimestamp = msg.payload;\n\nmsg.payload = {\n    ptId: 9999999001,\n    datatype: datatypes[type]\n}\n\nswitch(type) {\n    case 0:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            cause: \"cats\",\n            causeCode: \"cats\",\n            causeTerminology: \"cats\",\n            dateCreated: timestamp,\n            reaction: \"cats\",\n            originalComposition: \"\",\n            originalSource: \"\",\n            terminologyCode: \"\",\n        };\n        break;\n    case 1:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreated: timestamp,\n            doseAmount: \"20 mg\",\n            doseDirections: \"20 mg\",\n            doseTiming: \"1 per day\",\n            medicationCode: \"test\",\n            name: \"Paracetomol\",\n            route: \"Po Per Oral\",\n            startDate: \"2019-06-12\",\n            startTime: \"2019-06-15\",\n        }\n        break;\n    case 2:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            code: \"test\",\n            dateCreated: timestamp,\n            dateOfOnset: \"2019-06-11\",\n            description: \"test\",\n            problem: \"Asthma\",\n            terminology: \"test\",\n            originalComposition: \"\",\n            originalSource: \"\",\n        }\n        break;\n    case 3:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreate: 1560429237,\n            diastolicBP: \"98\",\n            heartRate: \"98\",\n            levelOfConsciousness: \"Voice\",\n            newsScore: \"11\",\n            oxygenSaturation: \"95\",\n            oxygenSupplemental: true,\n            respirationRate: \"13\",\n            systolicBP: \"98\",\n            temperature: \"37\",\n        }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -3889,7 +3889,7 @@
         "id": "6b78370c.554ee8",
         "type": "http request",
         "z": "41fae537.ef571c",
-        "name": "GET Problems Synopsis",
+        "name": "GET VitalSigns Synopsis",
         "method": "GET",
         "ret": "txt",
         "paytoqs": false,
@@ -3990,5 +3990,204 @@
                 "71c7d06a.12d35"
             ]
         ]
+    },
+    {
+        "id": "c83c7612.9a1808",
+        "type": "http in",
+        "z": "c690d9f4.501db8",
+        "name": "",
+        "url": "/patient/:ptId/vitalsigns",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 1940,
+        "wires": [
+            [
+                "aa61716b.79bc4"
+            ]
+        ]
+    },
+    {
+        "id": "aa61716b.79bc4",
+        "type": "change",
+        "z": "c690d9f4.501db8",
+        "name": "GetParams",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"ptId\": msg.req.params.ptId,\t    \"datatype\": \"vitalsigns\"\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 1940,
+        "wires": [
+            [
+                "ad4a639e.81616"
+            ]
+        ]
+    },
+    {
+        "id": "ad4a639e.81616",
+        "type": "function",
+        "z": "c690d9f4.501db8",
+        "name": "Redis HGET params",
+        "func": "payload = msg.payload\nmsg.payload = [payload.ptId+'.'+payload.datatype];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 1940,
+        "wires": [
+            [
+                "7d0094f4.da0adc"
+            ]
+        ]
+    },
+    {
+        "id": "7d0094f4.da0adc",
+        "type": "redis-command",
+        "z": "c690d9f4.501db8",
+        "server": "89248eb9.e979f",
+        "command": "hgetall",
+        "name": "",
+        "topic": "",
+        "x": 850,
+        "y": 1940,
+        "wires": [
+            [
+                "17874990.842666"
+            ]
+        ]
+    },
+    {
+        "id": "17874990.842666",
+        "type": "switch",
+        "z": "c690d9f4.501db8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "null"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 1030,
+        "y": 1940,
+        "wires": [
+            [
+                "e78a9d1a.335fa"
+            ],
+            [
+                "6e1d9e0f.96316"
+            ]
+        ]
+    },
+    {
+        "id": "e78a9d1a.335fa",
+        "type": "function",
+        "z": "c690d9f4.501db8",
+        "name": "Result JSON",
+        "func": "msg.payload = {data: \"fail\", msg: \"data doesn't exists\"};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1210,
+        "y": 1880,
+        "wires": [
+            [
+                "de57765c.d75e68"
+            ]
+        ]
+    },
+    {
+        "id": "de57765c.d75e68",
+        "type": "http response",
+        "z": "c690d9f4.501db8",
+        "name": "GET Data Error",
+        "statusCode": "400",
+        "headers": {},
+        "x": 1400,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "179a040.42a00fc",
+        "type": "inject",
+        "z": "41fae537.ef571c",
+        "name": "Vitalsigns List Test",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 840,
+        "wires": [
+            [
+                "c5a2a284.90121"
+            ]
+        ]
+    },
+    {
+        "id": "c5a2a284.90121",
+        "type": "http request",
+        "z": "41fae537.ef571c",
+        "name": "GET Vitalsigns List",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "http://127.0.0.1:1880/patient/9999999001/vitalsigns",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 390,
+        "y": 840,
+        "wires": [
+            [
+                "71c7d06a.12d35"
+            ]
+        ]
+    },
+    {
+        "id": "6e1d9e0f.96316",
+        "type": "function",
+        "z": "c690d9f4.501db8",
+        "name": "Generate VitalSigns List",
+        "func": "payload = msg.payload;\n\nmsg.payload = [];\n\nObject.values(payload).forEach(value => {\n  msg.payload.push(JSON.parse(value));\n});\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1250,
+        "y": 1960,
+        "wires": [
+            [
+                "4a1319c6.9e4408"
+            ]
+        ]
+    },
+    {
+        "id": "4a1319c6.9e4408",
+        "type": "http response",
+        "z": "c690d9f4.501db8",
+        "name": "Synopsis List Success",
+        "statusCode": "",
+        "headers": {},
+        "x": 1560,
+        "y": 1960,
+        "wires": []
     }
 ]
