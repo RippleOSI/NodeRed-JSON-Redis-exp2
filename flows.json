@@ -240,7 +240,7 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/allergies/kq21alape7mtw7eupmrzua?transform=TransformB-Allergy-UI2FHIR",
+        "url": "http://127.0.0.1:1880/patient/9999999001/allergies/fdmnsuemhu77scaa87ud8",
         "tls": "",
         "proxy": "",
         "authType": "",
@@ -3909,12 +3909,12 @@
         "id": "8fd10aee.9a1868",
         "type": "function",
         "z": "30a2050b.e916ca",
-        "name": "Redis HGET params",
+        "name": "Redis HGETALL params",
         "func": "payload = msg.payload\nmsg.payload = [payload.ptId+'.'+payload.datatype];\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 640,
-        "y": 2220,
+        "x": 710,
+        "y": 2300,
         "wires": [
             [
                 "7a589eaa.f9c64"
@@ -3929,8 +3929,8 @@
         "command": "hgetall",
         "name": "",
         "topic": "",
-        "x": 850,
-        "y": 2220,
+        "x": 910,
+        "y": 2300,
         "wires": [
             [
                 "7339210d.ee66"
@@ -3955,8 +3955,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 2,
-        "x": 1030,
-        "y": 2220,
+        "x": 1090,
+        "y": 2300,
         "wires": [
             [
                 "8cb39d0c.17986"
@@ -3974,8 +3974,8 @@
         "func": "msg.payload = {data: \"fail\", msg: \"data doesn't exists\"};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1210,
-        "y": 2160,
+        "x": 1270,
+        "y": 2240,
         "wires": [
             [
                 "793e1f1.2ab03e"
@@ -3989,8 +3989,8 @@
         "name": "GET Data Error",
         "statusCode": "400",
         "headers": {},
-        "x": 1400,
-        "y": 2160,
+        "x": 1460,
+        "y": 2240,
         "wires": []
     },
     {
@@ -4001,8 +4001,8 @@
         "func": "payload = msg.payload;\n\nmsg.payload = [];\n\nObject.values(payload).forEach(value => {\n  msg.payload.push(JSON.parse(value));\n});\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1250,
-        "y": 2240,
+        "x": 1310,
+        "y": 2320,
         "wires": [
             [
                 "abd93591.88a2c8"
@@ -4016,8 +4016,8 @@
         "name": "Synopsis List Success",
         "statusCode": "",
         "headers": {},
-        "x": 1560,
-        "y": 2240,
+        "x": 1620,
+        "y": 2320,
         "wires": []
     },
     {
@@ -4349,6 +4349,256 @@
         "wires": [
             [
                 "61478f35.53c78"
+            ]
+        ]
+    },
+    {
+        "id": "47e5470f.f465d8",
+        "type": "http in",
+        "z": "30a2050b.e916ca",
+        "name": "",
+        "url": "/patient/:ptId/allergies",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 2280,
+        "wires": [
+            [
+                "4579d9d1.9c0208"
+            ]
+        ]
+    },
+    {
+        "id": "34537797.69ac78",
+        "type": "http in",
+        "z": "30a2050b.e916ca",
+        "name": "",
+        "url": "/patient/:ptId/medications",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 2340,
+        "wires": [
+            [
+                "b913ac01.59e31"
+            ]
+        ]
+    },
+    {
+        "id": "8df513af.06d97",
+        "type": "http in",
+        "z": "30a2050b.e916ca",
+        "name": "",
+        "url": "/patient/:ptId/problems",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 2400,
+        "wires": [
+            [
+                "c66d0a74.479668"
+            ]
+        ]
+    },
+    {
+        "id": "4579d9d1.9c0208",
+        "type": "change",
+        "z": "30a2050b.e916ca",
+        "name": "GetParams",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"ptId\": msg.req.params.ptId,\t    \"datatype\": \"allergies\"\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 2280,
+        "wires": [
+            [
+                "8fd10aee.9a1868"
+            ]
+        ]
+    },
+    {
+        "id": "b913ac01.59e31",
+        "type": "change",
+        "z": "30a2050b.e916ca",
+        "name": "GetParams",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"ptId\": msg.req.params.ptId,\t    \"datatype\": \"medications\"\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 2340,
+        "wires": [
+            [
+                "8fd10aee.9a1868"
+            ]
+        ]
+    },
+    {
+        "id": "c66d0a74.479668",
+        "type": "change",
+        "z": "30a2050b.e916ca",
+        "name": "GetParams",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"ptId\": msg.req.params.ptId,\t    \"datatype\": \"problems\"\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 2400,
+        "wires": [
+            [
+                "8fd10aee.9a1868"
+            ]
+        ]
+    },
+    {
+        "id": "4705696d.bbeae8",
+        "type": "inject",
+        "z": "24302e84.4da702",
+        "name": "Allergies List Test",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 940,
+        "wires": [
+            [
+                "f52ca96.82df058"
+            ]
+        ]
+    },
+    {
+        "id": "f52ca96.82df058",
+        "type": "http request",
+        "z": "24302e84.4da702",
+        "name": "GET Allergies List",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "http://127.0.0.1:1880/patient/9999999001/allergies",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 390,
+        "y": 940,
+        "wires": [
+            [
+                "126a8ea3.8bca91"
+            ]
+        ]
+    },
+    {
+        "id": "81f96fe8.d5326",
+        "type": "inject",
+        "z": "24302e84.4da702",
+        "name": "Problems List Test",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 980,
+        "wires": [
+            [
+                "17ae9f5.0668d61"
+            ]
+        ]
+    },
+    {
+        "id": "17ae9f5.0668d61",
+        "type": "http request",
+        "z": "24302e84.4da702",
+        "name": "GET Problems List",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "http://127.0.0.1:1880/patient/9999999001/problems",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 390,
+        "y": 980,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "89c3e812.f698a8",
+        "type": "inject",
+        "z": "24302e84.4da702",
+        "name": "Medications List Test",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 130,
+        "y": 1020,
+        "wires": [
+            [
+                "1a3ac125.ecceaf"
+            ]
+        ]
+    },
+    {
+        "id": "1a3ac125.ecceaf",
+        "type": "http request",
+        "z": "24302e84.4da702",
+        "name": "GET Medications List",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "http://127.0.0.1:1880/patient/9999999001/medications",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 400,
+        "y": 1020,
+        "wires": [
+            [
+                "126a8ea3.8bca91"
             ]
         ]
     }
