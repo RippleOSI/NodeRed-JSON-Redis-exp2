@@ -17,7 +17,7 @@
         "id": "a74d56bf.bad038",
         "type": "redis-config",
         "z": "",
-        "host": "172.17.0.3",
+        "host": "172.17.0.2",
         "port": "{{REDIS_PORT_6379_TCP_PORT}}",
         "dbase": "{{REDIS_DB}}",
         "pass": "X6NvLgr5NJ/INEuzt6mxP5QdTyK+2ZQiXwwtaj8Mipy97SRM1pj6dK734XmoFZrNg5+b8kpO54cIPTVkdeveloper@ubuntu"
@@ -47,7 +47,7 @@
         "type": "function",
         "z": "24302e84.4da702",
         "name": "Generate Data for Create",
-        "func": "datatypes = [\n    \"allergies\", \n    \"medications\", \n    \"problems\",\n    \"vitalsigns\"\n];\n\ntype = Math.floor(Math.random() * 4);\n//type=3;\ntimestamp = msg.payload;\n\nmsg.payload = {\n    ptId: 9999999001,\n    datatype: datatypes[type]\n}\n\nswitch(type) {\n    case 0:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            cause: \"cats\",\n            causeCode: \"cats\",\n            causeTerminology: \"cats\",\n            dateCreated: timestamp,\n            reaction: \"cats\",\n            originalComposition: \"\",\n            originalSource: \"\",\n            terminologyCode: \"\",\n        };\n        break;\n    case 1:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreated: timestamp,\n            doseAmount: \"20 mg\",\n            doseDirections: \"20 mg\",\n            doseTiming: \"1 per day\",\n            medicationCode: \"test\",\n            name: \"Paracetomol\",\n            route: \"Po Per Oral\",\n            startDate: \"2019-06-12\",\n            startTime: \"2019-06-15\",\n        }\n        break;\n    case 2:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            code: \"test\",\n            dateCreated: timestamp,\n            dateOfOnset: \"2019-06-11\",\n            description: \"test\",\n            problem: \"Asthma\",\n            terminology: \"test\",\n            originalComposition: \"\",\n            originalSource: \"\",\n        }\n        break;\n    case 3:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreate: 1560429237,\n            diastolicBP: \"98\",\n            heartRate: \"98\",\n            levelOfConsciousness: \"Voice\",\n            newsScore: \"11\",\n            oxygenSaturation: \"95\",\n            oxygenSupplemental: true,\n            respirationRate: \"13\",\n            systolicBP: \"98\",\n            temperature: \"37\",\n        }\n}\n\nreturn msg;",
+        "func": "datatypes = [\n    \"allergies\", \n    \"medications\", \n    \"problems\",\n    \"vitalsigns\"\n];\n\ntype = Math.floor(Math.random() * 4);\n//type=3;\ntimestamp = msg.payload;\n\nmsg.payload = {\n    ptId: global.get('patientID'),\n    datatype: datatypes[type]\n}\n\nswitch(type) {\n    case 0:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            cause: \"cats\",\n            causeCode: \"cats\",\n            causeTerminology: \"cats\",\n            dateCreated: timestamp,\n            reaction: \"cats\",\n            originalComposition: \"\",\n            originalSource: \"\",\n            terminologyCode: \"\",\n        };\n        break;\n    case 1:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreated: timestamp,\n            doseAmount: \"20 mg\",\n            doseDirections: \"20 mg\",\n            doseTiming: \"1 per day\",\n            medicationCode: \"test\",\n            name: \"Paracetomol\",\n            route: \"Po Per Oral\",\n            startDate: \"2019-06-12\",\n            startTime: \"2019-06-15\",\n        }\n        break;\n    case 2:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            code: \"test\",\n            dateCreated: timestamp,\n            dateOfOnset: \"2019-06-11\",\n            description: \"test\",\n            problem: \"Asthma\",\n            terminology: \"test\",\n            originalComposition: \"\",\n            originalSource: \"\",\n        }\n        break;\n    case 3:\n        msg.payload.data = {\n            author: \"Robert Tweed\",\n            dateCreate: 1560429237,\n            diastolicBP: \"98\",\n            heartRate: \"98\",\n            levelOfConsciousness: \"Voice\",\n            newsScore: \"11\",\n            oxygenSaturation: \"95\",\n            oxygenSupplemental: true,\n            respirationRate: \"13\",\n            systolicBP: \"98\",\n            temperature: \"37\",\n        }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -148,7 +148,7 @@
         "y": 180,
         "wires": [
             [
-                "f9d4577b.03fd58"
+                "ea687bc3.b9daf8"
             ]
         ]
     },
@@ -157,14 +157,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Allergies Synopsis",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/synopsis/allergies",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 410,
+        "x": 830,
         "y": 180,
         "wires": [
             [
@@ -188,7 +188,7 @@
         "y": 360,
         "wires": [
             [
-                "515011a6.5a9f5"
+                "d5061707.c53e38"
             ]
         ]
     },
@@ -197,14 +197,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Medicians Data",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/medications/0ndpc1dvqagapo0oui3num",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 400,
+        "x": 820,
         "y": 400,
         "wires": [
             [
@@ -228,7 +228,7 @@
         "y": 400,
         "wires": [
             [
-                "91f003c5.5cd89"
+                "ea20296f.1fdce8"
             ]
         ]
     },
@@ -237,14 +237,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Allergies Data",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/allergies/fdmnsuemhu77scaa87ud8",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
+        "x": 810,
         "y": 360,
         "wires": [
             [
@@ -361,7 +361,7 @@
         "type": "function",
         "z": "24302e84.4da702",
         "name": "Generate Data for Update",
-        "func": "msg.payload = {\n    ptId: 9999999001,\n    datatype: 'allergies',\n    data: {\n        author: \"Not known\",\n        cause: \"Adverse reaction to aspirin\",\n        causeCode: \"http://snomed.info/sct\",\n        causeTerminology: 292044008,\n        dateCreated: 1181170800000,\n        id: \"kq21alape7mtw7eupmrzua\",\n        originalComposition: \"\",\n        originalSource: \"\",\n        reaction: \"Adverse reaction to aspirin\",\n        source: \"ethercis\",\n        sourceId: \"kq21alape7mtw7eupmrzua\",\n        terminologyCode: \"http://snomed.info/sct\"\n    }\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    ptId: global.get('patientID'),\n    datatype: 'allergies',\n    data: {\n        author: \"Not known\",\n        cause: \"Adverse reaction to aspirin\",\n        causeCode: \"http://snomed.info/sct\",\n        causeTerminology: 292044008,\n        dateCreated: 1181170800000,\n        id: \"kq21alape7mtw7eupmrzua\",\n        originalComposition: \"\",\n        originalSource: \"\",\n        reaction: \"Adverse reaction to aspirin\",\n        source: \"ethercis\",\n        sourceId: \"kq21alape7mtw7eupmrzua\",\n        terminologyCode: \"http://snomed.info/sct\"\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -491,7 +491,7 @@
         "type": "function",
         "z": "24302e84.4da702",
         "name": "Generate Data for Delete",
-        "func": "msg.payload = {\n    ptId: 9999999001,\n    datatype: 'allergies',\n    sourceId: \"uige9bzetlkce76w5x9hti\"\n}\n\nreturn msg;",
+        "func": "msg.payload = {\n    ptId: global.get('patientID'),\n    datatype: 'allergies',\n    sourceId: \"uige9bzetlkce76w5x9hti\"\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -507,14 +507,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Medication Synopsis",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/synopsis/medications",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 410,
+        "x": 830,
         "y": 220,
         "wires": [
             [
@@ -538,7 +538,7 @@
         "y": 220,
         "wires": [
             [
-                "92306477.3048c8"
+                "309c816c.6fc4be"
             ]
         ]
     },
@@ -547,14 +547,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Problems Synopsis",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/synopsis/problems",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 410,
+        "x": 830,
         "y": 260,
         "wires": [
             [
@@ -578,7 +578,7 @@
         "y": 260,
         "wires": [
             [
-                "763da497.59049c"
+                "3dc2f8a9.e29b48"
             ]
         ]
     },
@@ -598,7 +598,7 @@
         "y": 440,
         "wires": [
             [
-                "cea652e9.d0bf8"
+                "3f276363.d3cb2c"
             ]
         ]
     },
@@ -607,14 +607,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Problems Data",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/problems/kb6q8h0zucjx8nuov7h8",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 400,
+        "x": 820,
         "y": 440,
         "wires": [
             [
@@ -647,7 +647,7 @@
         "type": "function",
         "z": "24302e84.4da702",
         "name": "Generate Data for Patient",
-        "func": "\nmsg.payload = {\n    data: {\n        address: {\n            city: \"Redhill\",\n            country: \"United Kingdom\",\n            district: \"Surrey\",\n            line: \"3 Cooper Walk\",\n            postalCode: \"RH1 6SF\",\n        },\n        birthDate: \"1956-11-10\",\n        gender: \"male\",\n        id: global.get('patientID'),\n        name: {\n            family: \"Alex\",\n            given: [\n                \"Rob\",\n            ],\n            prefix: \"Mr\",\n            telecom: \"+779017 876\"\n        },\n    }\n}\n\nreturn msg;",
+        "func": "\nmsg.payload = {\n    data: {\n        address: {\n            city: \"Redhill\",\n            country: \"United Kingdom\",\n            district: \"Surrey\",\n            line: \"3 Cooper Walk\",\n            postalCode: \"RH1 6SF\",\n        },\n        birthDate: \"1956-11-10\",\n        gender: \"male\",\n        id: global.get('patientID'),\n        name: {\n            family: \"Tweet\",\n            given: [\n                \"Rob\",\n            ],\n            prefix: \"Mr\",\n            telecom: \"+779017 876\"\n        },\n    }\n}\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 410,
@@ -745,7 +745,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
                 "96a00ca3.49046"
@@ -761,7 +761,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 410,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
                 "d8483063.f8bff"
@@ -788,7 +788,7 @@
         "to": "",
         "reg": false,
         "x": 650,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
                 "fe2e2b61.8e3398"
@@ -815,7 +815,7 @@
         "to": "",
         "reg": false,
         "x": 860,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
                 "36e0fa21.d70356"
@@ -835,7 +835,7 @@
         "proxy": "",
         "authType": "",
         "x": 1060,
-        "y": 620,
+        "y": 600,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -855,7 +855,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 680,
+        "y": 640,
         "wires": [
             [
                 "f17c1a25.7debb8"
@@ -871,7 +871,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 410,
-        "y": 680,
+        "y": 640,
         "wires": [
             [
                 "a4fe27e5.1c9e28"
@@ -898,7 +898,7 @@
         "to": "",
         "reg": false,
         "x": 870,
-        "y": 680,
+        "y": 640,
         "wires": [
             [
                 "86ae8d50.3ee19"
@@ -918,7 +918,7 @@
         "proxy": "",
         "authType": "basic",
         "x": 1060,
-        "y": 680,
+        "y": 640,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -945,7 +945,7 @@
         "to": "",
         "reg": false,
         "x": 650,
-        "y": 680,
+        "y": 640,
         "wires": [
             [
                 "d0304fe8.fe9b7"
@@ -965,10 +965,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 120,
-        "y": 480,
+        "y": 520,
         "wires": [
             [
-                "c353517a.0b61b"
+                "ca329fd2.5aa8b"
             ]
         ]
     },
@@ -977,15 +977,15 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Patients Data",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/mpi/patient/9999999001",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
-        "y": 480,
+        "x": 810,
+        "y": 520,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -1005,7 +1005,7 @@
         "once": true,
         "onceDelay": 0.1,
         "x": 120,
-        "y": 760,
+        "y": 880,
         "wires": [
             [
                 "ab293d42.27fb5"
@@ -1017,11 +1017,11 @@
         "type": "function",
         "z": "24302e84.4da702",
         "name": "Set Patient ID",
-        "func": "global.set('patientID', 9999999001);\nreturn msg;",
+        "func": "global.set('patientID', 9999999000);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 380,
-        "y": 760,
+        "y": 880,
         "wires": [
             []
         ]
@@ -1042,7 +1042,7 @@
         "y": 300,
         "wires": [
             [
-                "7d9d4b55.d6c204"
+                "7a0e4e6b.3e806"
             ]
         ]
     },
@@ -1051,14 +1051,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET VitalSigns Synopsis",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/synopsis/vitalsigns",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 410,
+        "x": 830,
         "y": 300,
         "wires": [
             [
@@ -1079,10 +1079,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 520,
+        "y": 480,
         "wires": [
             [
-                "1f7837af.52a6f8"
+                "22342e69.ef0382"
             ]
         ]
     },
@@ -1090,16 +1090,16 @@
         "id": "1f7837af.52a6f8",
         "type": "http request",
         "z": "24302e84.4da702",
-        "name": "GET Problems Data",
-        "method": "GET",
+        "name": "GET VitalSigns Data",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/vitalsigns/s853d3jdfddvf89xni0cf",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 400,
-        "y": 520,
+        "x": 820,
+        "y": 480,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -1122,7 +1122,7 @@
         "y": 840,
         "wires": [
             [
-                "97b2a2aa.99d27"
+                "ff596a84.b16ce8"
             ]
         ]
     },
@@ -1131,14 +1131,14 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Vitalsigns List",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/vitalsigns",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
+        "x": 830,
         "y": 840,
         "wires": [
             [
@@ -1159,7 +1159,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 880,
+        "y": 680,
         "wires": [
             [
                 "d52684ba.d3fe78"
@@ -1174,12 +1174,12 @@
         "method": "GET",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/mpi/patient?name=Tweet",
+        "url": "http://127.0.0.1:1880/mpi/patient?name=e",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
-        "y": 880,
+        "x": 830,
+        "y": 680,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -1721,7 +1721,7 @@
         "type": "function",
         "z": "30a2050b.e916ca",
         "name": "Add Source ID to Data",
-        "func": "newid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);\nmsg.payload.data.id = newid;\nmsg.payload.data.sourceId = newid;\nmsg.payload.data.source = \"ethercis\";\nreturn msg;",
+        "func": "newid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);\nmsg.payload.data.id = newid;\nmsg.payload.data.sourceId = newid;\nmsg.payload.data.source = \"ethercis\";\nflow.set('id', newid);\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 680,
@@ -1769,7 +1769,7 @@
         "type": "function",
         "z": "30a2050b.e916ca",
         "name": "Result JSON",
-        "func": "msg.payload = {data: \"success\", msg: \"data created successfully\"};\nreturn msg;",
+        "func": "msg.payload = {success: true, id: flow.get('id')};\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1370,
@@ -4033,33 +4033,6 @@
         "y": 1900,
         "wires": [
             [
-                "c4a7e098.728d2"
-            ]
-        ]
-    },
-    {
-        "id": "c4a7e098.728d2",
-        "type": "change",
-        "z": "30a2050b.e916ca",
-        "name": "GetParams",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\t    \"name\": msg.req.query.name\t}",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 330,
-        "y": 1900,
-        "wires": [
-            [
                 "e8f4181e.840cf8"
             ]
         ]
@@ -4069,10 +4042,10 @@
         "type": "function",
         "z": "30a2050b.e916ca",
         "name": "Redis KEYS params",
-        "func": "\nmsg.payload = [\"patient.nameidx.*\"+msg.payload.name+\"*\"];\nglobal.set('ptIds', []);\nglobal.set('patientList', []);\n\nreturn msg;",
+        "func": "\nvar ptName = msg.req.query.name ? msg.req.query.name : '';\nmsg.payload = [\"patient.nameidx.*\"+ptName+\"*\"];\nglobal.set('ptIds', []);\nglobal.set('patientList', []);\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 580,
+        "x": 460,
         "y": 1900,
         "wires": [
             [
@@ -4497,10 +4470,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 120,
-        "y": 940,
+        "y": 720,
         "wires": [
             [
-                "f52ca96.82df058"
+                "c9e94d16.f9f6"
             ]
         ]
     },
@@ -4509,15 +4482,15 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Allergies List",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/allergies",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
-        "y": 940,
+        "x": 830,
+        "y": 720,
         "wires": [
             [
                 "126a8ea3.8bca91"
@@ -4537,10 +4510,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 980,
+        "y": 760,
         "wires": [
             [
-                "17ae9f5.0668d61"
+                "7da59d19.8ea424"
             ]
         ]
     },
@@ -4549,17 +4522,19 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Problems List",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/problems",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 390,
-        "y": 980,
+        "x": 830,
+        "y": 760,
         "wires": [
-            []
+            [
+                "126a8ea3.8bca91"
+            ]
         ]
     },
     {
@@ -4575,10 +4550,10 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 130,
-        "y": 1020,
+        "y": 800,
         "wires": [
             [
-                "1a3ac125.ecceaf"
+                "4ba23497.4510ec"
             ]
         ]
     },
@@ -4587,18 +4562,577 @@
         "type": "http request",
         "z": "24302e84.4da702",
         "name": "GET Medications List",
-        "method": "GET",
+        "method": "use",
         "ret": "txt",
         "paytoqs": false,
-        "url": "http://127.0.0.1:1880/patient/9999999001/medications",
+        "url": "",
         "tls": "",
         "proxy": "",
         "authType": "",
-        "x": 400,
-        "y": 1020,
+        "x": 840,
+        "y": 800,
         "wires": [
             [
                 "126a8ea3.8bca91"
+            ]
+        ]
+    },
+    {
+        "id": "6f8a668d.6016e8",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 180,
+        "wires": [
+            [
+                "f9d4577b.03fd58"
+            ]
+        ]
+    },
+    {
+        "id": "ea687bc3.b9daf8",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/synopsis/allergies';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 180,
+        "wires": [
+            [
+                "6f8a668d.6016e8"
+            ]
+        ]
+    },
+    {
+        "id": "309c816c.6fc4be",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/synopsis/medications';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "59ce625b.4c122c"
+            ]
+        ]
+    },
+    {
+        "id": "59ce625b.4c122c",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "92306477.3048c8"
+            ]
+        ]
+    },
+    {
+        "id": "3dc2f8a9.e29b48",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/synopsis/problems';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 260,
+        "wires": [
+            [
+                "7290d62d.c66cc8"
+            ]
+        ]
+    },
+    {
+        "id": "7290d62d.c66cc8",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 260,
+        "wires": [
+            [
+                "763da497.59049c"
+            ]
+        ]
+    },
+    {
+        "id": "7a0e4e6b.3e806",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/synopsis/vitalsigns';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 300,
+        "wires": [
+            [
+                "eae229c5.0e8978"
+            ]
+        ]
+    },
+    {
+        "id": "eae229c5.0e8978",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 300,
+        "wires": [
+            [
+                "7d9d4b55.d6c204"
+            ]
+        ]
+    },
+    {
+        "id": "d5061707.c53e38",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/allergies/fdmnsuemhu77scaa87ud8';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 360,
+        "wires": [
+            [
+                "88a2ee16.e9cf2"
+            ]
+        ]
+    },
+    {
+        "id": "88a2ee16.e9cf2",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 360,
+        "wires": [
+            [
+                "515011a6.5a9f5"
+            ]
+        ]
+    },
+    {
+        "id": "ea20296f.1fdce8",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/medications/0ndpc1dvqagapo0oui3num';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 400,
+        "wires": [
+            [
+                "648e740c.b4759c"
+            ]
+        ]
+    },
+    {
+        "id": "648e740c.b4759c",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 400,
+        "wires": [
+            [
+                "91f003c5.5cd89"
+            ]
+        ]
+    },
+    {
+        "id": "3f276363.d3cb2c",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/problems/kb6q8h0zucjx8nuov7h8';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 440,
+        "wires": [
+            [
+                "1c078090.416cef"
+            ]
+        ]
+    },
+    {
+        "id": "1c078090.416cef",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "cea652e9.d0bf8"
+            ]
+        ]
+    },
+    {
+        "id": "ca329fd2.5aa8b",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/mpi/patient/' + global.get('patientID');\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 520,
+        "wires": [
+            [
+                "715e2d4f.655444"
+            ]
+        ]
+    },
+    {
+        "id": "715e2d4f.655444",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 520,
+        "wires": [
+            [
+                "c353517a.0b61b"
+            ]
+        ]
+    },
+    {
+        "id": "22342e69.ef0382",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/vitalsigns/s853d3jdfddvf89xni0cf';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 480,
+        "wires": [
+            [
+                "e810715b.a5cc6"
+            ]
+        ]
+    },
+    {
+        "id": "e810715b.a5cc6",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "1f7837af.52a6f8"
+            ]
+        ]
+    },
+    {
+        "id": "c9e94d16.f9f6",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/allergies';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 720,
+        "wires": [
+            [
+                "38ca8c71.c97f04"
+            ]
+        ]
+    },
+    {
+        "id": "38ca8c71.c97f04",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 720,
+        "wires": [
+            [
+                "f52ca96.82df058"
+            ]
+        ]
+    },
+    {
+        "id": "7da59d19.8ea424",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/problems';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 760,
+        "wires": [
+            [
+                "7d4ff070.c4377"
+            ]
+        ]
+    },
+    {
+        "id": "7d4ff070.c4377",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 760,
+        "wires": [
+            [
+                "17ae9f5.0668d61"
+            ]
+        ]
+    },
+    {
+        "id": "4ba23497.4510ec",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/medications';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 800,
+        "wires": [
+            [
+                "f6a36380.a6d4a"
+            ]
+        ]
+    },
+    {
+        "id": "f6a36380.a6d4a",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 800,
+        "wires": [
+            [
+                "1a3ac125.ecceaf"
+            ]
+        ]
+    },
+    {
+        "id": "ff596a84.b16ce8",
+        "type": "function",
+        "z": "24302e84.4da702",
+        "name": "Create API Route",
+        "func": "msg.url = 'http://127.0.0.1:1880/patient/' + global.get('patientID') + '/vitalsigns';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 390,
+        "y": 840,
+        "wires": [
+            [
+                "b824e05.e50532"
+            ]
+        ]
+    },
+    {
+        "id": "b824e05.e50532",
+        "type": "change",
+        "z": "24302e84.4da702",
+        "name": "Method is GET",
+        "rules": [
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 840,
+        "wires": [
+            [
+                "97b2a2aa.99d27"
             ]
         ]
     }
